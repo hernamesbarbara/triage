@@ -9,4 +9,4 @@ if __name__ == "__main__":
     overwrites = 'skip'
     lt = LinkedinTriage()
 
-    lt.triage(INPUT)
+    lt.triage(INPUT, how=how, overwrites=overwrites)
