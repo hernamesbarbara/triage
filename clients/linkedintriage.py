@@ -80,11 +80,12 @@ class LinkedinTriage(Triage):
 
         # If the path is a directory, loop through all .xlsx files in the directory
         if path.is_dir():
-            for file in path.glob('*.xlsx'):
+            for i, file in enumerate(path.glob('*.xlsx')):
                 self._triage_single_file(file, how=how, overwrites=overwrites)
+            return f"{i+1} files processed in {path=}"
         elif path.is_file():
             # If it's a single file, just triage it
-            self._triage_single_file(path, how=how, overwrites=overwrites)
+            return self._triage_single_file(path, how=how, overwrites=overwrites)
         else:
             raise ValueError("The specified path does not exist or is not a file/directory.")
 
