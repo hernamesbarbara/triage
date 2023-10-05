@@ -15,6 +15,8 @@ import sys
 from clients.linkedintriage import LinkedinTriage
 from docopt import docopt
 
+__version__ = '0.0.1'
+
 def linkedin_command():
     lt = LinkedinTriage()
     try:
@@ -32,14 +34,7 @@ def list_commands():
     print(os.linesep.join(valid_commands.keys()), file=sys.stdout)
 
 if __name__ == "__main__":
-    # INPUT = sys.argv[1:][0]
-    # how = 'copy'
-    # overwrites = 'skip'
-    # lt = LinkedinTriage()
-
-    # lt.triage(INPUT, how=how, overwrites=overwrites)
-
-    args = docopt(__doc__)
+    args = docopt(__doc__, version=__version__)
     if args.get('list'):
         list_commands()
     elif args.get('linkedin'):
