@@ -160,3 +160,4 @@ cython_debug/
 #.idea/
 run_test.py
 naval_fate.py
+*.DS_Store
