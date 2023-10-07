@@ -75,6 +75,9 @@ class LinkedinTriage(Triage):
         """
         Triage a single xlsx file or all xlsx files in a directory
         """
+        
+        super().triage_base() # This ensures that the data_ attribute is reset before triaging
+        
         # Convert the path to a pathlib.Path object if it's not already one
         path = Path(path) if not isinstance(path, Path) else path
 
@@ -103,26 +106,12 @@ class LinkedinTriage(Triage):
         
         # Use the existing logic to find the appropriate output directory based on the filename
         output_directory = self.get_linkedin_output_directory(filename.name)
-
-        overwrite_flag = overwrites == 'overwrite'
         
         # Use the copy or move method from the base class to move the file
         if how == 'copy':
-            try:
-                return Triage.copy(filename, output_directory, overwrite=overwrite_flag)
-            except FileExistsError as err:
-                if overwrites == 'skip':
-                    return
-                else:
-                    raise
+            return self.copy(filename, output_directory, overwrites=overwrites)
         else:
-            try:
-                return Triage.move(filename, output_directory, overwrite=overwrite_flag)
-            except FileExistsError as err:
-                if overwrites == 'skip':
-                    return
-                else:
-                    raise
+            return self.move(filename, output_directory, overwrites=overwrites)
 
 
 

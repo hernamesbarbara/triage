@@ -20,9 +20,11 @@ __version__ = '0.0.1'
 def linkedin_command():
     lt = LinkedinTriage()
     try:
-        print(lt.triage(args['INPUT'], how='copy', overwrites='skip'), file=sys.stdout)
+        lt.triage(args['INPUT'], how='copy', overwrites='skip')
+        return lt
     except Exception as e:
         print(e, file=sys.stderr)
+        return lt
 
 def list_commands():
     
@@ -38,6 +40,8 @@ if __name__ == "__main__":
     if args.get('list'):
         list_commands()
     elif args.get('linkedin'):
-        linkedin_command()
+        lt = linkedin_command()
+        print(f"Input: {args['INPUT']}", file=sys.stdout)
+        print(lt.summary(), file=sys.stdout)
     else:
         print(f"Unknown command", file=sys.stderr)
