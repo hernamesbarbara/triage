@@ -100,14 +100,8 @@ class LinkedinTriage(Triage):
         if how not in ['copy', 'move']:
             raise ValueError("The 'how' parameter must be either 'copy' or 'move'.")
         
-        # Convert filename to Path object if it's a string
-        if isinstance(filename, str):
-            filename = Path(filename)
-        
-        # Use the existing logic to find the appropriate output directory based on the filename
         output_directory = self.get_linkedin_output_directory(filename.name)
         
-        # Use the copy or move method from the base class to move the file
         if how == 'copy':
             return self.copy(filename, output_directory, overwrites=overwrites)
         else:
