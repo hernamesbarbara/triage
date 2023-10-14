@@ -84,7 +84,11 @@ class LinkedinTriage(Triage):
         # If the path is a directory, loop through all .xlsx files in the directory
         if path.is_dir():
             for i, file in enumerate(path.glob('*.xlsx')):
-                self._triage_single_file(file, how=how, overwrites=overwrites)
+                try:
+                    self._triage_single_file(file, how=how, overwrites=overwrites)
+                except Exception as e:
+                    print(f"Error triaging {file.name}: {e}")
+                    continue
             return f"{i+1} files processed in {path=}"
         elif path.is_file():
             # If it's a single file, just triage it
@@ -100,7 +104,11 @@ class LinkedinTriage(Triage):
         if how not in ['copy', 'move']:
             raise ValueError("The 'how' parameter must be either 'copy' or 'move'.")
         
-        output_directory = self.get_linkedin_output_directory(filename.name)
+        try:
+            output_directory = self.get_linkedin_output_directory(filename.name)
+        except ValueError as e:
+            print(f"Error triaging {filename.name}: {e}")
+            return
         
         if how == 'copy':
             return self.copy(filename, output_directory, overwrites=overwrites)
